@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 const routerCards = require('./routes/cards');
 const routerUser = require('./routes/users');
 
@@ -16,10 +17,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 app.use((req, res, next) => {
   req.user = {
-    _id: '60dad7d5882f1b141827047c'
+    _id: '60dad7d5882f1b141827047c',
   };
 
   next();
@@ -27,6 +27,7 @@ app.use((req, res, next) => {
 
 app.use('/', routerUser);
 app.use('/', routerCards);
+app.use(helmet());
 
 app.get(/.*/, (req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
