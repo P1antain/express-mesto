@@ -23,7 +23,7 @@ module.exports.getCards = (req, res) => {
 
 module.exports.deleteCardId = (req, res) => {
   const owner = req.user._id;
-  Card.find(req.params.cardId)
+  Card.find({_id: req.params.cardId})
     .then((card) => {
       if (!card) {
         res.status(404).send({ message: 'Запрашиваемая карточка не найдена' });
