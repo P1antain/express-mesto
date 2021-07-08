@@ -19,15 +19,22 @@
   },
   "homepage": "https://github.com/P1antain/express-mesto#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "celebrate": "^14.0.0",
+    "cookie-parser": "^1.4.5",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
-    "mongoose": "^5.12.15",
-    "nodemon": "^2.0.8"
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.8",
+    "mongoose": "^5.13.2",
+    "nodemon": "^2.0.10",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
-    "eslint": "^7.29.0"
+    "eslint": "^7.30.0"
   }
 }
