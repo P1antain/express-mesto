@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
 const NotFoundUserError = require('../errors/NotFoundError');
 
+
 module.exports.auth = (req, res, next) => {
-  const { authorization } = req.headers;
+  const { authorization } = req.cookies;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return res.status(401).send({ message: 'Необходимо авторизоваться' });
