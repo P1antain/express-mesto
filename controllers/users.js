@@ -17,7 +17,7 @@ module.exports.createUser = (req, res, next) => {
       User.create({
         name, avatar, about, email, password: encryptedPassword,
       })
-        .then((user) => res.send({ data: user }))
+        .then((user) => res.status(200).send({ data: {name, about, avatar, email} }))
         .catch((err) => {
           if (!email || !password) {
             return next(new BadRequestError('Вы не заполнили обязательные поля'));
@@ -85,7 +85,7 @@ module.exports.patchAvatar = (req, res, next) => {
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
-  User.findOne({ email })
+  User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
         throw new NotFoundUserError('Неправильные почта или пароль');
@@ -93,11 +93,11 @@ module.exports.login = (req, res, next) => {
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            throw NotFoundUserError('Неправильные почта или пароль');
+            throw new NotFoundUserError('Неправильные почта или пароль');
           }
           const token = jwt.sign(
             { _id: user._id },
-            'very-secret-key',
+            'secret-key',
             { expiresIn: '7d' },
           );
 
@@ -105,11 +105,13 @@ module.exports.login = (req, res, next) => {
             maxAge: 3600000 * 24 * 7,
             httpOnly: true,
           })
+
             .status(201).send({
               message: 'Аутентификация прошла успешно',
             });
         });
     })
+
     .catch(next);
 };
 

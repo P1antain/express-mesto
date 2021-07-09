@@ -10,7 +10,7 @@ const { login, createUser } = require('./controllers/users');
 
 const { auth } = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
-const { validateAuth } = require('./middlewares/celebrate');
+const { validateAuth, validateUserInfo } = require('./middlewares/celebrate');
 
 const page404 = require('./routes/page404');
 
@@ -25,14 +25,13 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 
 app.use(cookieParser());
-app.use(errors());
 app.use(helmet());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post('/signin', validateAuth, login);
-app.post('/signup', validateAuth, createUser);
+app.post('/signup', [validateAuth, validateUserInfo], createUser);
 
 app.use(helmet());
 
