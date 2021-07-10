@@ -3,7 +3,7 @@ const { auth } = require('../middlewares/auth');
 const { validateUserId, validateUserInfo } = require('../middlewares/celebrate');
 
 const {
-  createUser, getUser, getUserId, patchUser, patchAvatar, getCurrentUser
+  createUser, getUser, getUserId, patchUser, patchAvatar, getCurrentUser,
 } = require('../controllers/users');
 
 router.post('/users', createUser);

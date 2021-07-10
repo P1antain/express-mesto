@@ -24,7 +24,7 @@ module.exports.getCards = (req, res, next) => {
 };
 
 module.exports.deleteCardId = (req, res, next) => {
-  const owner = req.user._id;
+  // const owner = req.user._id;
   Card.findOne({ _id: req.params.cardId })
     .orFail(new NotFoundError('Нет такой карточки'))
     .then((card) => {

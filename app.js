@@ -10,7 +10,7 @@ const { login, createUser } = require('./controllers/users');
 
 const { auth } = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
-const { validateAuth, validateUserInfo } = require('./middlewares/celebrate');
+const { validateSignin, validateSignup } = require('./middlewares/celebrate');
 
 const page404 = require('./routes/page404');
 
@@ -30,8 +30,8 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.post('/signin', validateAuth, login);
-app.post('/signup', [validateAuth, validateUserInfo], createUser);
+app.post('/signin', validateSignin, login);
+app.post('/signup', validateSignup, createUser);
 
 app.use(helmet());
 

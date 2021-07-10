@@ -17,7 +17,11 @@ module.exports.createUser = (req, res, next) => {
       User.create({
         name, avatar, about, email, password: encryptedPassword,
       })
-        .then((user) => res.status(200).send({ data: {name, about, avatar, email} }))
+        .then(() => res.status(200).send({
+          data: {
+            name, about, avatar, email,
+          },
+        }))
         .catch((err) => {
           if (!email || !password) {
             return next(new BadRequestError('Вы не заполнили обязательные поля'));
@@ -116,7 +120,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
-  User.findById(req.user._id).select('+password')
+  User.findById(req.user._id)
     .orFail(new NotFoundError('Такого пользователя нет в базе'))
     .then((user) => res.status(200).send(user))
     .catch((err) => {

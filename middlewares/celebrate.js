@@ -17,14 +17,25 @@ module.exports.validateUserInfo = celebrate({
     name: Joi.string().max(30),
     about: Joi.string().max(30),
     avatar: Joi.string()
-        .regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/),
+      .regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/),
   }),
 });
 
-module.exports.validateAuth = celebrate({
+module.exports.validateSignin = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(6),
+  }),
+});
+
+module.exports.validateSignup = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(6),
+    name: Joi.string().max(30),
+    about: Joi.string().max(30),
+    avatar: Joi.string()
+      .regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/),
   }),
 });
 
@@ -32,7 +43,7 @@ module.exports.validateCardInfo = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     link: Joi.string()
-        .regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/),
+      .regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/),
   }),
 });
 
