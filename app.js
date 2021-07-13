@@ -11,6 +11,7 @@ const { login, createUser } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 const { validateSignin, validateSignup } = require('./middlewares/celebrate');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const page404 = require('./routes/page404');
 
@@ -30,18 +31,17 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(requestLogger);
 app.post('/signin', validateSignin, login);
 app.post('/signup', validateSignup, createUser);
+app.use('/', routerUser);
+app.use('/', routerCards);
+app.use('/', page404);
+app.use(errorLogger);
 
 app.use(helmet());
 
 app.use(auth);
-
-app.use('/', routerUser);
-
-app.use('/', routerCards);
-
-app.use('/', page404);
 
 app.use(errors());
 
